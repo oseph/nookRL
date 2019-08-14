@@ -1,0 +1,40 @@
+group 'nookRL'
+version '0.1.2'
+
+apply plugin: 'application'
+apply plugin: 'java'
+apply plugin: 'idea'
+
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+}
+
+mainClassName = "nook.ApplicationMain"
+
+repositories {
+    maven {
+        url "/Users/josh/.m2/repository"
+    }
+    maven { url 'https://jitpack.io' }
+}
+
+task customFatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'nook.ApplicationMain'
+    }
+    baseName = 'NookRL'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+dependencies {
+    compile 'com.github.pakoito:AsciiPanel:1.1.0'
+}
+
+//jar {
+//    manifest {
+//        attributes(
+//                "Main-Class": 'nook.ApplicationMain')
+//    }
+//}
